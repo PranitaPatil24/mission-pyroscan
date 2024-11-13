@@ -302,3 +302,24 @@
 "301",57,1,"asymptomatic",130,131,0,0,115,1,1.2,2,1,"reversable","Yes"
 "302",57,0,"nontypical",130,236,0,2,174,0,0,2,1,"normal","Yes"
 "303",38,1,"nonanginal",138,175,0,0,173,0,0,1,NA,"normal","No"
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_iris
+k-fold crooss validation
+# Load example dataset
+data = load_iris()
+X = data.data
+y = data.target
+
+# Initialize the model
+model = LogisticRegression(max_iter=200)
+
+# Perform 5-fold cross-validation
+scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+
+# Calculate the average accuracy
+average_accuracy = scores.mean()
+
+print("Accuracy on each fold:", scores)
+print("Average Accuracy:", average_accuracy)
+
