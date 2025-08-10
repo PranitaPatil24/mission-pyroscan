@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyroScan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+       
+        body,
+        html  {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+    
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transition: opacity 2s ease-out;
+        }
+
+        .video-container.fade-out {
+            opacity: 0;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-content {
+            display: none;
+            position: relative;
+            z-index: 0;
+        }
+
+        header {
+            border-radius: 3cm;
+            height: 80px;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff11;
+            padding: 10px 20px;
+            margin: 0 auto;
+        }
+
+        .lg {
+            margin-top: 15px;
+            width: 150px;
+            height: 170px;
+            background-image: url(logo2.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        nav.elements {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav.elements ul li a {
+            color: rgb(228, 95, 18);
+            text-decoration: none;
+            font-size: 1.4rem;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Playfair Display', serif;
+            transition: color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+
+        /* Default hover styling for Home link */
+        nav.elements ul li a[data-section="home"] {
+            color: #0177ff;
+            box-shadow: 0px 4px 12px rgba(3, 102, 214, 0.5);
+            transform: translateY(-3px);
+            cursor: pointer;
+        }
+
+        nav.elements ul li a:hover {
+            color: #0177ff;
+            box-shadow: 0px 4px 12px rgba(3, 102, 214, 0.5);
+            transform: translateY(-3px);
+            cursor: pointer;
+        }
+
+        .hero {
+            background-image: url("infraa.png");
+            background-size: cover;
+            background-position: center;
+            color: rgb(37, 18, 18);
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 300px;
+        }
+
+        .hero h1 {
+            font-family: ui-sans-serif;
+            font-size: 2rem;
+            text-shadow: 2px 2px 5px rgba(61, 61, 61, 0.7);
+            margin-bottom: 30px;
+            color:rgb(37, 18, 18); ;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: rgb(249, 85, 25);
+            color: white;
+            padding: 15px 30px;
+            border:none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            text-shadow: 2px 2px 5px rgba(61, 61, 61, 0.7);
+        }
+
+        .cta-button:hover {
+            background-color:#0177ff;
+        }
+
+        section {
+            padding: 50px 20px;
+        }
+
+        footer {
+            background-color: #24292e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /*FRAMES*/
+        #frames {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #f7f9fa;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        line-height: 1.6;
+        }
+        #frames h2 {
+        font-size: 2.5rem;
+        color: #333;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+         margin-bottom: 20px;
+        }
+        .image {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 50px 0;
+        gap: 15px;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+          }
+
+        .image img {
+        width: 100%;
+        max-width: 400%;  /* Each image takes up 30% of the container's width */
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+         /* FRAMEWORK*/
+        #framework h2{
+            color: #0177ff;
+            font-weight: 300;
+        }      
+#framework {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #f7f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Heading Styling */
+#framework h2 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-bottom: 20px;
+}
+
+#framework h3 {
+    font-size: 1.75rem;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Paragraph Styling */
+#framework p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Specific Styling for Lists (if needed) */
+#framework ul {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+#framework ul li {
+    margin-bottom: 10px;
+}
+
+/* Improve Link Visibility */
+#framework a {
+    color: #0177ff;
+    text-decoration: none;
+}
+
+#framework a:hover {
+    color: #0177ff;
+    text-decoration: underline;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    #framework {
+        padding: 20px;
+    }
+
+    #framework h2 {
+        font-size: 2rem;
+    }
+
+    #framework h3 {
+        font-size: 1.5rem;
+    }
+
+    #framework p {
+        font-size: 0.9rem;
+    }
+}
+/* Styling for Image Row */
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.image-row img {
+    width: 100%;
+    max-width: 30%;  /* Each image takes up 30% of the container's width */
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    .image-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .image-row img {
+        max-width: 100%; /* Images stack vertically */
+    }
+}
+
+/* General Section Styling */
+#about {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #f7f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Heading Styling */
+#about h2 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    margin-bottom: 20px;
+}
+
+/* Paragraph Styling */
+#about p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    #about {
+        padding: 20px;
+    }
+
+    #about h2 {
+        font-size: 2rem;
+    }
+
+    #about p {
+        font-size: 0.9rem;
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #f7f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: rgb(228, 95, 18);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0177ff;
+}
+
+.response-message {
+    margin-top: 20px;
+    color: rgb(228, 95, 18);
+    text-align: center;
+}
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="video-container">
+        <video autoplay muted>
+            <source src="animatedlogo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="lg"></div>
+            <nav class="elements">
+                <ul>
+                    <li><a href="#" data-section="home">Home</a></li>
+                    <li><a href="#" data-section="frames">Frames</a></li>
+                    <li><a href="#" data-section="framework">Framework</a></li>
+                    <li><a href="#" data-section="about">About</a></li>
+                    <li><a href="#" data-section="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>In the blink of an eye, safety can change everything</h1>
+                <a href="elevatenow.html" class="cta-button">Elevate now</a>
+            </div>
+        </section>
+
+        <section id="frames">
+            <h2>Frames</h2>
+            <div class="image">
+                <img src="image1.jpg" alt="Setup of Fever Detection System">
+                <img src="image2.jpg" alt="System Operation in Public Space">
+                <img src="image3.jpg" alt="Temperature Scanning Interface">
+                <img src="image4.jpg" alt="Temperature Scanning Interface">
+                <img src="image5.jpg" alt="Temperature Scanning Interface">
+                <img src="image6.jpg" alt="Temperature Scanning Interface">
+            </div>
+    
+        </section>
+        <section id="framework">
+            <h2>Framework</h2>
+            <p>
+                Our Fever Detection System is designed to enhance public health and safety by providing an automated, efficient means of identifying individuals with elevated body temperatures. Here, we provide a comprehensive guide to setting up, operating, and maintaining the device, along with best practices for data handling to ensure privacy and compliance.</p>
+                
+                <h3>Setup Instructions</h3>
+            <p>
+                The system requires minimal setup. Begin by securely mounting the Raspberry Pi 4 and MLX90640 thermal camera in a stable location with a clear view of the area you wish to monitor. Connect all necessary components and power on the device, ensuring a stable internet connection for real-time data uploads and alerts. Calibration is vital: use OpenCV’s temperature thresholding capabilities to set baseline temperatures, adjusting for optimal sensitivity to detect feverish temperatures accurately.
+            </p>   
+                
+                <h3>Operational Guidelines</h3>
+                <p>
+                    Once set up, the system operates autonomously, monitoring body temperatures in real time. Configure the system through the user-friendly web interface built on Node.js and Express, allowing you to set alert thresholds and adjust scanning frequency. When the system detects a fever, it triggers immediate alerts through a connected dashboard. High-throughput processing capabilities allow it to scan large groups quickly, ideal for use in public spaces like airports, schools, or events.
+                
+                </p>
+                <div class="image-row">
+                    <img src="img1.jpg" alt="Setup of Fever Detection System">
+                    <img src="img2.jpg" alt="System Operation in Public Space">
+                    <img src="img3.jpg" alt="Temperature Scanning Interface">
+                </div>
+                
+               <h3>Safety Precautions</h3> 
+               <p>
+                For optimal performance and user safety, place the device in well-ventilated areas away from reflective surfaces that may affect temperature readings. To maintain sensor accuracy, avoid extreme environmental temperatures and periodic recalibrate as necessary.
+                
+               </p> 
+               <h3> Maintenance and Troubleshooting</h3>
+               <p>Routine maintenance is simple but essential for sustained accuracy. Regularly check the device’s power and network connections, inspect the thermal camera lens, and use the interface to ensure correct readings. In case of sensor discrepancies, recalibrate the camera using OpenCV’s calibration functions. </p> 
+                
+                <h3> Privacy and Data Management</h3>
+               <p>This system leverages MongoDB for secure data logging, storing only essential information, including temperature readings, timestamps, and alert records. We prioritize data privacy: ensure compliance with privacy standards by configuring data retention periods and using encrypted storage options in MongoDB. Follow secure access protocols to restrict dashboard access to authorized personnel, preserving privacy while maintaining the system’s effectiveness.</p> 
+        </section>
+
+        <section id="about">
+            <h2>About</h2>
+            <p>Our Fever Detection System is a forward-thinking solution designed to bolster public health and safety in high-traffic environments. By leveraging advanced thermal imaging and data analysis, this system accurately detects elevated body temperatures, an early indicator of potential health concerns, including infectious diseases. Built around the Raspberry Pi 4 and the MLX90640 thermal camera, our system offers a cost-effective yet highly reliable approach to screening, capable of identifying individuals with fevers in real-time without invasive procedures.
+
+                The system’s functionality centers on sophisticated machine learning models and OpenCV, allowing it to differentiate between feverish and non-feverish individuals by setting accurate temperature thresholds. Integrated with Node.js and MongoDB, it provides a seamless interface for users, with customizable alert systems, data logging, and secure storage for monitoring trends over time. The web interface makes it easy for operators to adjust settings, analyze patterns, and ensure consistent performance.
+                
+                Moreover, privacy is a top priority. The Fever Detection System complies with data protection standards by anonymizing temperature readings and using encrypted storage, ensuring that users’ personal health information remains secure. Designed for ease of use, it requires minimal setup and maintenance, making it accessible for various sectors such as airports, schools, hospitals, and workplaces.
+                
+                Ultimately, this system represents a proactive approach to health monitoring, aiming to create safer public spaces through fast, accurate temperature checks. Its automated design, combined with robust data management, offers a scalable solution for early detection and timely response, contributing positively to community well-being and public safety.</p>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <form id="contactForm" class="contact-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+        
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+        
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+        
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="responseMessage" class="response-message"></div>
+            </div>
+        </section>
+        
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 PyroScan.</p>
+                <ul class="footer-links">
+                    <li><a href="#privacy-policy">Privacy Policy</a></li>
+                    <li><a href="#terms-of-service">Terms of Service</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+        </footer>
+        
+    </div>
+
+    <script>
+        // Fade out the video and show main content after 7 seconds
+        setTimeout(function () {
+            document.querySelector('.video-container').classList.add('fade-out');
+        }, 5000); //5
+
+        setTimeout(function () {
+            document.querySelector('.video-container').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'block';
+            document.body.style.overflow = 'auto';
+        }, 7000); //7
+
+        // Smooth scroll to section
+        document.querySelectorAll('nav.elements ul li a').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const section = document.getElementById(this.getAttribute('data-section'));
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Update hover style for selected link
+                document.querySelectorAll('nav.elements ul li a').forEach(el => el.style.color = '');
+                this.style.color = '#0366d6';
+            });
+        });
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Simple validation (more complex validation can be added)
+    if (name === "" || email === "" || message === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Simulate sending the data (e.g., to a server)
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Message:", message);
+
+    // Display a response message
+    const responseMessage = document.getElementById('responseMessage');
+    responseMessage.textContent = "Thank you for your message, " + name + "!";
+    responseMessage.style.color = "green";
+
+    // Clear the form
+    document.getElementById('contactForm').reset();
+});
+
+    </script>
+</body>
+
+</html>

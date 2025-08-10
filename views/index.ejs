@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Camera Stream</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #video-frame {
+            border: 2px solid black;
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Thermal Camera Stream</h1>
+    <img id="video-frame" src="data:image/jpg;base64," alt="Thermal Camera Stream">
+
+    <script>
+        const ws = new WebSocket('ws://<%= serverIp %>:3000');
+
+        ws.onmessage = function(event) {
+            // Update the image source with the received base64 frame
+            document.getElementById('video-frame').src = 'data:image/jpg;base64,' + event.data;
+        };
+    </script>
+</body>
+</html>
